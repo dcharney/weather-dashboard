@@ -1,8 +1,10 @@
 const apiKey = "63db3938e3ac243baca7c44aa5400f00";
 
 
-var getWeather = function() {
-    var cityName = "Atlanta";
+var getWeather = function(cityName) {
+    var cityContainerEl = document.querySelector("#currentCity");
+    cityContainerEl.textContent = cityName;
+    
     var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=imperial&appid=" + apiKey;
 
     fetch(apiUrl).then(function(response) {
@@ -47,4 +49,4 @@ var getWeather = function() {
     });
 };
 
-getWeather();
+getWeather("Atlanta");
