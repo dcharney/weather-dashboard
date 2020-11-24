@@ -60,10 +60,11 @@ var updateUVIndex = function(val) {
     // get current UV value and style element accordingly
     var uvEl = $("#currentUV");
     uvEl.text(val);
+    uvEl.removeClass();
 
-    if (currentUV < 3) {
+    if (val < 3) {
         uvEl.addClass("bg-success text-light p-2 rounded");
-    } else if (currentUV < 6) {
+    } else if (val < 6) {
         uvEl.addClass("bg-warning text-light p-2 rounded");
     } else {
         uvEl.addClass("bg-danger text-light p-2 rounded");
@@ -115,6 +116,7 @@ var get5DayForecast = function(cityName) {
             for (i=0;i<5;i++) {
                 // based on the index value above, find the index value for the 5 days (add 4 so the printed data values are for the middle of the day)
                 var actualIdx = i * 8 + idx + 4;
+                if (actualIdx>39) {actualIdx = 39};
     
                 // get data from api at Unix and convert
                 var timeCodeUnix = response.list[actualIdx].dt;
@@ -145,8 +147,14 @@ var get5DayForecast = function(cityName) {
 
 var formSubmitHandler = function(event) {
     //event.preventDefault();
+    target = $(event.target);
+    targetId = target.attr("id");
 
-    var city = $("#citySearch").val();
+    if (targetId === "citySearchList") {
+        var city = target.text();
+    } else if (targetId === "search-submit") {
+        var city = $("#citySearch").val();
+    };
 
     if (city) {
         getCurrentWeather(city);
@@ -155,10 +163,18 @@ var formSubmitHandler = function(event) {
     }
 };
 
+
 $("#submit-btn").click(formSubmitHandler);
+$("button").click(formSubmitHandler);
+
 $('#citySearch').keypress(function(event){
     var keycode = (event.keyCode ? event.keyCode : event.which);
     if(keycode == '13'){
-        formSubmitHandler();  
+        var city = $("#citySearch").val();
+        if (city) {
+            getCurrentWeather(city);
+        } else {
+            alert("please enter a city");
+        }
     }
 });
