@@ -36,9 +36,10 @@
                 </div>
                 <!-- Right side to display city specific data -->
                 <div class="col-9">
+                    <!-- the first card displays the current weather info for the selected city -->
                     <div class="mt-3 card">
                         <div class="card-body">
-                            <h3 class="card-title mb-4"><span id="currentCity" ></span> (<span id="currentDate" ></span>) </h3>
+                            <h3 class="card-title mb-4"><span id="currentCity" ></span> (<span id="currentDate" ></span>)<img id="currentIcon" src="" alt="Weather icon"></h3>
                             <p class="card-text">Temperature: <span id="currentTemp" ></span> &#8457</p>
                             <p class="card-text">Humidity: <span id="currentHumidity" ></span>%</p>
                             <p class="card-text">Wind Speed: <span id="currentWindSpeed" ></span> MPH</p>
@@ -46,8 +47,9 @@
                         </div>
                     </div>
                     <div class="mt-2">
+                        <!-- the lower section displays the 5 day forecast for the selected city -->
                         <h4>5-Day Forecast:</h4>
-                        <div class="row justify-content-around text-light m-2">
+                        <div id="day-forecast" class="row justify-content-around text-light m-2">
                             <div class="col-2 card bg-primary">
                                 <h6 class="card-title">8/25/2020</h6>
                                 <i class="fa fa-sun"></i>
@@ -87,6 +89,7 @@
 
 
     </main>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>
 </html>
