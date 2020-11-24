@@ -1,6 +1,37 @@
 const apiKey = "63db3938e3ac243baca7c44aa5400f00";
 var userFormEl = $("#citySearch");
 
+var buildSearchHistory = function() {
+    // get search history from local storage
+    var searchHistory = JSON.parse(localStorage.getItem("searchHistory"));
+    if (searchHistory == null) {
+        // if the search history local variable does not exist then generate the left column with common locations
+        searchHistory = ["Orlando","Atlanta","Dallas","Denver","New York","Detroit","Seattle", "Alburqueque"];
+        localStorage.setItem("searchHistory",JSON.stringify(searchHistory));
+    }
+    var groupContainer = $(".list-group");
+    groupContainer.html("");
+    for (i in searchHistory) {
+        // generate a list group item for each city in search history
+        var buttonEl = $("<button>")
+            .addClass("list-group-item list-group-item-action")
+            .attr("id", "citySearchList")
+            .attr("type", "button")
+            .text(searchHistory[i]);
+        groupContainer.append(buttonEl);
+    }
+};
+
+var updateSearchHistory = function(city) {
+    var searchHistory = JSON.parse(localStorage.getItem("searchHistory"));
+    searchHistory.unshift(city);
+    searchHistory.pop();
+    localStorage.setItem("searchHistory",JSON.stringify(searchHistory));
+    buildSearchHistory();
+    // link new buttons to functions
+    $("button").click(formSubmitHandler);
+}
+
 var getIndex = function(response) {
     // takes the json response data from the api fetch and returns the index value where the day changes
     // data is reported every 3 hours
@@ -158,11 +189,15 @@ var formSubmitHandler = function(event) {
 
     if (city) {
         getCurrentWeather(city);
+        updateSearchHistory(city);
     } else {
         alert("please enter a city");
     }
 };
 
+
+buildSearchHistory();
+getCurrentWeather("Orlando");
 
 $("#submit-btn").click(formSubmitHandler);
 $("button").click(formSubmitHandler);
@@ -173,6 +208,7 @@ $('#citySearch').keypress(function(event){
         var city = $("#citySearch").val();
         if (city) {
             getCurrentWeather(city);
+            updateSearchHistory(city);
         } else {
             alert("please enter a city");
         }
