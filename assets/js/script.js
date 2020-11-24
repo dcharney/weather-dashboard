@@ -72,7 +72,7 @@ var updateCurrentWeather = function(response) {
     tempEl.text(currentTemp);
     humidityEl.text(currentHumidity);
     windSpeedEl.text(currentWindSpeed);
-    iconEl.attr("src", "http://openweathermap.org/img/w/" + currentIcon + ".png");
+    iconEl.attr("src", "https://openweathermap.org/img/w/" + currentIcon + ".png");
 
     // print data to screen
     var currentTimeCodeUnix = response.dt;
@@ -115,7 +115,7 @@ var getCurrentWeather = function(cityName) {
                 var location = updateCurrentWeather(response);
                 get5DayForecast(cityName);
                 
-                var apiUrlUV = "http://api.openweathermap.org/data/2.5/uvi?lat=" + location.lat  + "&lon=" + location.long + "&appid=" + apiKey;
+                var apiUrlUV = "https://api.openweathermap.org/data/2.5/uvi?lat=" + location.lat  + "&lon=" + location.long + "&appid=" + apiKey;
                 return fetch(apiUrlUV);
             }).then(function(response) {
                 response.json().then(function(response) {
@@ -135,7 +135,7 @@ var get5DayForecast = function(cityName) {
     // clear any existing data
     forecastContainerEl.html("");
     
-    var apiUrl = "http://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&units=imperial&appid=" + apiKey;
+    var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&units=imperial&appid=" + apiKey;
 
     fetch(apiUrl).then(function(response) {
         // dont need if response ok since already checked earlier
@@ -159,7 +159,7 @@ var get5DayForecast = function(cityName) {
                 var cardEl = $("<div>").addClass("col-2 card bg-primary pt-2");
                 var cardTitleEl = $("<h5>").addClass("card-title").text(time);
                 var divEl = $("<div>").addClass("weather-icon");
-                var cardIconEl = $("<img>").addClass("p-2").attr("src","http://openweathermap.org/img/w/" + icon + ".png");
+                var cardIconEl = $("<img>").addClass("p-2").attr("src","https://openweathermap.org/img/w/" + icon + ".png");
                 var cardTempEl = $("<p>").addClass("card-text").text("Temp: " + temp + " " + String.fromCharCode(176) + "F");
                 var cardHumidityEl = $("<p>").addClass("card-text mb-2").text("Humidity: " + humidity + "%");
     
