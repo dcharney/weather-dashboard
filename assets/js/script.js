@@ -62,6 +62,13 @@ var getCurrentWeather = function(cityName) {
         var uvEl = $("#currentUV");
         var currentUV = response.value;
         uvEl.text(currentUV);
+        if (currentUV < 3) {
+            uvEl.addClass("bg-success text-light p-2 rounded");
+        } else if (currentUV < 6) {
+            uvEl.addClass("bg-warning text-light p-2 rounded");
+        } else {
+            uvEl.addClass("bg-danger text-light p-2 rounded");
+        };
     });
 };
 
