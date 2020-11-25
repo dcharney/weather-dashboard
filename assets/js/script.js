@@ -22,14 +22,21 @@ var buildSearchHistory = function() {
     }
 };
 
+
 var updateSearchHistory = function(city) {
     var searchHistory = JSON.parse(localStorage.getItem("searchHistory"));
     searchHistory.unshift(city);
     searchHistory.pop();
     localStorage.setItem("searchHistory",JSON.stringify(searchHistory));
-    buildSearchHistory();
-    // link new buttons to functions
-    $("button").click(formSubmitHandler);
+
+    // gather all list items
+    var listItems = $(".list-group-item");
+
+    // Update button text
+    for (l in listItems) {
+        // update text of each item
+        listItems[l].textContent = searchHistory[l];
+    };
 }
 
 var getIndex = function(response) {
@@ -177,7 +184,6 @@ var get5DayForecast = function(cityName) {
 };
 
 var formSubmitHandler = function(event) {
-    //event.preventDefault();
     target = $(event.target);
     targetId = target.attr("id");
 
@@ -193,13 +199,15 @@ var formSubmitHandler = function(event) {
     } else {
         alert("please enter a city");
     }
+
+    target.blur();
 };
 
 
 buildSearchHistory();
 getCurrentWeather("Orlando");
 
-$("#submit-btn").click(formSubmitHandler);
+
 $("button").click(formSubmitHandler);
 
 $('#citySearch').keypress(function(event){
