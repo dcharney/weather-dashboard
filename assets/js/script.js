@@ -110,8 +110,6 @@ var updateUVIndex = function(val) {
 };
 
 var getCurrentWeather = function(cityName) {
-    var cityContainerEl = $("#currentCity");
-    cityContainerEl.text(cityName);
     
     var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&units=imperial&appid=" + apiKey;
 
@@ -119,6 +117,10 @@ var getCurrentWeather = function(cityName) {
         // only continue if valid city data
         if (response.ok) {
             response.json().then(function(response) {
+                var cityContainerEl = $("#currentCity");
+                cityContainerEl.text(cityName);
+                updateSearchHistory(cityName);
+
                 var location = updateCurrentWeather(response);
                 get5DayForecast(cityName);
                 
@@ -195,7 +197,6 @@ var formSubmitHandler = function(event) {
 
     if (city) {
         getCurrentWeather(city);
-        updateSearchHistory(city);
     } else {
         alert("please enter a city");
     }
@@ -216,7 +217,6 @@ $('#citySearch').keypress(function(event){
         var city = $("#citySearch").val();
         if (city) {
             getCurrentWeather(city);
-            updateSearchHistory(city);
         } else {
             alert("please enter a city");
         }
